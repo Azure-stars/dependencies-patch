@@ -8,7 +8,7 @@ A simple tool to patch cargo dependencies with command line commands.
 
 - [x] Support for packages from `github`
 - [ ] Support for packages from other URL
-- [ ] Support for packages from `crates-io` 
+- [x] Support for packages from `crates-io` 
 - [ ] Support for packages from other registries
 
 

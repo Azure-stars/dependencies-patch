@@ -29,7 +29,7 @@ pub struct GitPatch {
 }
 
 impl GitPatch {
-    /// Create a new patch
+    /// Create a new git patch
     pub(crate) fn new(
         git: String,
         package: Option<String>,

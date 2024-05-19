@@ -2,7 +2,7 @@
 edition = "2021"
 name = "dependencies-patch"
 authors = ["Youjie Zheng <azure_stars@126.com>"]
-version = "0.1.0"
+version = "0.2.0"
 license = "MIT"
 description = "A simple tool to patch cargo dependencies with command line commands."
 repository = "https://github.com/Azure-stars/dependencies-patch"

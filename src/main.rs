@@ -55,6 +55,7 @@ use arg_parse::parse_args;
 use patch::patch;
 mod cargo_parse;
 mod git_patch;
+mod index_patch;
 mod patch;
 fn main() {
     let args = if let Some(args) = parse_args() {
