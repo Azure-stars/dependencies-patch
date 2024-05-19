@@ -1,0 +1,21 @@
+[package]
+edition = "2021"
+name = "dependencies-patch"
+authors = ["Youjie Zheng <azure_stars@126.com>"]
+version = "0.1.0"
+license = "MIT"
+description = "A simple tool to patch cargo dependencies with command line commands."
+repository = "https://github.com/Azure-stars/dependencies-patch"
+readme = "README.md"
+keywords = ["cargo", "patch", "command"]
+
+[workspace]
+
+[dependencies]
+toml = "0.8"
+clap = { version = "4.5", features = ["derive"] }
+color-print = "0.3.5"
+
+[dependencies.serde]
+features = ["derive"]
+version = "1.0"
