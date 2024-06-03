@@ -7,6 +7,7 @@ use crate::{
     cargo_parse::{pick_package, Dependency},
     git_patch::{self, GitInfo, GitPatch},
     index_patch::{self, IndexPatch},
+    path_patch::{self, PathPatch},
 };
 
 /// Check whether the patch exists for the specific package
@@ -128,8 +129,11 @@ pub(crate) fn patch(args: Args) {
             index_patch::do_index_patch(&args.cargo_path, &args.package_name, &index_patch);
         }
         _ => {
-            error_log!("Unsupported patch type: {}", args.patch_type);
-            return;
+            let path_patch = PathPatch::new(
+                args.real_package_name,
+                args.patch_path.unwrap(),
+            );
+            path_patch::do_path_patch(&args.cargo_path, &args.package_name, path_patch);
         }
     }
 }
