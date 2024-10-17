@@ -96,12 +96,13 @@ pub(crate) fn gen_patch_table(
         }
         _ => {
             error_log!("The package specified is a path dependency, which can't be patched!");
-            return None;
+            None
         }
     }
 }
 
 pub(crate) fn patch(args: Args) {
+    let cargo_path = args.cargo_path.unwrap();
     match args.patch_type.as_str() {
         "git" => {
             let mut git_info = GitInfo::None;
@@ -118,7 +119,7 @@ pub(crate) fn patch(args: Args) {
                 args.package_version,
                 git_info,
             );
-            git_patch::do_git_patch(&args.cargo_path, &args.package_name, git_patch);
+            git_patch::do_git_patch(&cargo_path, &args.package_name, git_patch);
         }
         // "path" => {
         //     // patch(&args.cargo_path, &args.package_name, &args.patch_path.unwrap());
@@ -126,14 +127,11 @@ pub(crate) fn patch(args: Args) {
         "registry" => {
             let index_patch =
                 IndexPatch::new(args.real_package_name, args.package_version.unwrap());
-            index_patch::do_index_patch(&args.cargo_path, &args.package_name, &index_patch);
+            index_patch::do_index_patch(&cargo_path, &args.package_name, &index_patch);
         }
         _ => {
-            let path_patch = PathPatch::new(
-                args.real_package_name,
-                args.patch_path.unwrap(),
-            );
-            path_patch::do_path_patch(&args.cargo_path, &args.package_name, path_patch);
+            let path_patch = PathPatch::new(args.real_package_name, args.patch_path.unwrap());
+            path_patch::do_path_patch(&cargo_path, &args.package_name, path_patch);
         }
     }
 }

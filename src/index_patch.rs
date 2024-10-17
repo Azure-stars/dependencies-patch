@@ -68,7 +68,7 @@ pub(crate) fn do_index_patch(cargo_path: &String, package_name: &String, patch: 
         .append(true)
         .open(format!("{}/Cargo.toml", cargo_path))
         .unwrap();
-
+    file.write_all("\n".as_bytes()).unwrap();
     if let Err(mes) = file.write_all(toml::to_string(&toml_table).unwrap().as_bytes()) {
         error_log!("{}", mes);
     };

@@ -53,7 +53,7 @@ impl GitPatch {
 ///
 /// - Ok((owner, repo)): The owner and repo name of the given patch
 /// - Err(mes): The error message
-fn check_git_patch_format<'a>(patch: &'a GitPatch) -> Result<(&'a str, &'a str), String> {
+fn check_git_patch_format(patch: &GitPatch) -> Result<(&str, &str), String> {
     let names = patch.git.split('/').collect::<Vec<&str>>();
     if names.len() != 2 {
         return Err(format!("{} is not a valid git repo name!", patch.git));

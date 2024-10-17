@@ -24,14 +24,15 @@ impl CargoPackage {
                     let git_url = source
                         .split('#')
                         .collect::<Vec<&str>>()
-                        .get(0)
+                        .first()
                         .unwrap()
                         .to_string()
                         .split_off(4);
                     if let Some(pos) = git_url.find('?') {
-                        Dependency::Git(git_url[..pos].to_string());
+                        Dependency::Git(git_url[..pos].to_string())
+                    } else {
+                        Dependency::Git(git_url)
                     }
-                    Dependency::Git(git_url)
                 } else if source.starts_with("registry+") {
                     // TODO: support more registries
                     Dependency::Registry("crates-io".to_string())
@@ -87,7 +88,7 @@ pub(crate) fn pick_package(
         .package
         .iter()
         .find(|package| package.name == *package_name)
-        .map(|package| package.clone())
+        .cloned()
         .ok_or(format!(
             "The package {} is not found in the Cargo.lock file",
             package_name

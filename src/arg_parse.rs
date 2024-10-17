@@ -7,7 +7,7 @@ use clap::Parser;
 pub struct Args {
     /// The path of the cargo project, where the Cargo.toml file is in
     #[arg(short, long)]
-    pub cargo_path: String,
+    pub cargo_path: Option<String>,
 
     /// The name of the package to be patched, which may be renamed
     #[arg(short = 'n', long = "name")]
@@ -21,10 +21,11 @@ pub struct Args {
     ///
     /// - `path`: Patch the package to a local path
     ///
-    /// `Notes`:
-    /// - The `registry` only supports `crates-io`
+    /// Notes:
     ///
-    /// - The `git` points to `github.com` defaultly
+    ///     - The `registry` only supports `crates-io`
+    ///
+    ///     - The `git` points to `github.com` defaultly
     #[arg(short = 't', long = "type")]
     pub patch_type: String,
 
@@ -46,13 +47,13 @@ pub struct Args {
     #[arg(long)]
     pub commit: Option<String>,
 
-    /// The tag name to be patched for git patch
-    #[arg(long)]
-    pub tag: Option<String>,
-
     /// The branch name to be patched for git patch
     #[arg(long)]
     pub branch: Option<String>,
+
+    /// The tag name to be patched for registry patch
+    #[arg(long)]
+    pub tag: Option<String>,
 
     /// The local path to be patched for path patch
     #[arg(long)]
@@ -70,7 +71,7 @@ pub struct Args {
 ///
 /// - None: The arguments are not valid
 pub(crate) fn parse_args() -> Option<Args> {
-    let args = Args::parse();
+    let mut args = Args::parse();
     match args.patch_type.as_str() {
         "git" => {
             if args.git_repo.is_none() {
@@ -106,5 +107,6 @@ pub(crate) fn parse_args() -> Option<Args> {
             return None;
         }
     }
+    args.cargo_path = Some(args.cargo_path.unwrap_or(".".to_string()));
     Some(args)
 }
