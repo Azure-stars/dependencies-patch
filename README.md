@@ -35,7 +35,7 @@ version = "0.1.0"
 log = "0.4"
 ```
 
-Then run the following command to patch the `log` dependency to a git repository:
+Then run following commands to patch the `log` dependency to a git repository:
 
 ```sh
 $ dependencies-patch --help
@@ -61,9 +61,31 @@ git = "https://github.com/rust-lang//log.git"
 
 
 
+We can also patch the package to the local path by running the following commands:
+
+```sh
+$ dependencies-patch -c . -n log -t path --patch-path ../log
+```
+
+And the `Cargo.toml` will be updated to:
+
+```toml
+[package]
+name = "helloworld"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+log = "0.4"
+
+[patch.crates-io.log]
+path = "../log"
+```
+
+
+
+More usages can be known by running `dependencies --help` command.
+
 # Notes
 
 The tool can only add patches to the `Cargo.toml` file. It don't support removing patches.
-
-
-
