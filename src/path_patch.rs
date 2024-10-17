@@ -55,10 +55,7 @@ pub(crate) fn do_path_patch(cargo_path: &String, package_name: &String, patch: P
     // The table which contains the patch information
     let mut patch_table = Table::new();
 
-    patch_table.insert(
-        "path".to_string(),
-        toml::Value::String(patch.path.clone()),
-    );
+    patch_table.insert("path".to_string(), toml::Value::String(patch.path.clone()));
 
     index_table.insert(package_name.clone(), toml::Value::Table(patch_table));
     // Write the patch table to the Cargo.toml in appending mode
@@ -66,7 +63,7 @@ pub(crate) fn do_path_patch(cargo_path: &String, package_name: &String, patch: P
         .append(true)
         .open(format!("{}/Cargo.toml", cargo_path))
         .unwrap();
-
+    file.write_all("\n".as_bytes()).unwrap();
     if let Err(mes) = file.write_all(toml::to_string(&toml_table).unwrap().as_bytes()) {
         error_log!("{}", mes);
     };
